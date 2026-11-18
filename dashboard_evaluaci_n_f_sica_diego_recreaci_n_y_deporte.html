@@ -1,0 +1,1738 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard — Diego Fuentes | Recreación y Deporte</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --blue-deep: #071730;
+      --blue-navy: #0F2D5C;
+      --blue-royal: #1E40AF;
+      --blue-electric: #2563EB;
+      --blue-sky: #0EA5E9;
+      --blue-ice: #EFF6FF;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background-color: #F1F5F9;
+      color: #0F172A;
+      overflow-x: hidden;
+    }
+
+    .hero-gradient {
+      background: linear-gradient(135deg, #071730 0%, #0F2D5C 48%, #1D4ED8 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-orb {
+      position: absolute;
+      border-radius: 9999px;
+      filter: blur(60px);
+      opacity: 0.35;
+      pointer-events: none;
+      animation: floatOrb 9s ease-in-out infinite alternate;
+    }
+
+    .hero-orb-1 {
+      width: 340px;
+      height: 340px;
+      background: #38BDF8;
+      top: -110px;
+      right: -60px;
+    }
+
+    .hero-orb-2 {
+      width: 260px;
+      height: 260px;
+      background: #3B82F6;
+      bottom: -90px;
+      left: 10%;
+      animation-delay: -4s;
+    }
+
+    @keyframes floatOrb {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(-24px, 16px) scale(1.1); }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(16px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-in {
+      animation: fadeInUp 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    .delay-1 { animation-delay: 0.05s; }
+    .delay-2 { animation-delay: 0.10s; }
+    .delay-3 { animation-delay: 0.15s; }
+    .delay-4 { animation-delay: 0.20s; }
+
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      14% { transform: scale(1.18); }
+      28% { transform: scale(1); }
+      42% { transform: scale(1.14); }
+      70% { transform: scale(1); }
+    }
+
+    .pulse-heart {
+      animation: heartbeat 1.8s ease-in-out infinite;
+    }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.96);
+      border: 1px solid rgba(203, 213, 225, 0.75);
+      box-shadow: 0 10px 30px -12px rgba(15, 45, 92, 0.10);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    }
+
+    .glass-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 36px -12px rgba(37, 99, 235, 0.18);
+      border-color: rgba(59, 130, 246, 0.45);
+    }
+
+    .kpi-card {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .kpi-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3.5px;
+      background: linear-gradient(90deg, #1E40AF, #0EA5E9);
+      opacity: 0.9;
+    }
+
+    .nav-tab {
+      transition: all 0.2s ease;
+    }
+
+    .nav-tab.active {
+      background: rgba(255, 255, 255, 0.22);
+      color: #FFFFFF;
+      border-color: rgba(125, 211, 252, 0.55);
+      box-shadow: 0 4px 14px -4px rgba(14, 165, 233, 0.45);
+    }
+
+    .seg-btn {
+      transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .seg-btn.active {
+      background: linear-gradient(135deg, #1D4ED8 0%, #0EA5E9 100%);
+      color: #FFFFFF;
+      box-shadow: 0 6px 16px -4px rgba(37, 99, 235, 0.45);
+    }
+
+    .chip-btn {
+      transition: all 0.2s ease;
+    }
+
+    .chip-btn.active {
+      background-color: #1D4ED8;
+      color: #FFFFFF;
+      border-color: #1D4ED8;
+      box-shadow: 0 4px 12px -3px rgba(29, 78, 216, 0.4);
+    }
+
+    .progress-fill {
+      transition: width 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .table-row-interactive {
+      transition: background-color 0.18s ease, transform 0.15s ease;
+      cursor: pointer;
+    }
+
+    .table-row-interactive:hover {
+      background-color: #EFF6FF;
+    }
+
+    .table-row-interactive.selected-row {
+      background-color: #DBEAFE;
+    }
+
+    .replay-flash {
+      animation: fadeInUp 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .view-panel {
+      display: none;
+    }
+
+    .view-panel.active-view {
+      display: block;
+      animation: fadeInUp 0.42s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    .evidence-frame {
+      background: linear-gradient(145deg, #EFF6FF 0%, #F8FAFC 100%);
+      border: 2px dashed rgba(37, 99, 235, 0.32);
+      transition: border-color 0.2s ease, background-color 0.2s ease;
+    }
+
+    .evidence-frame.has-image {
+      border-style: solid;
+      border-color: rgba(14, 165, 233, 0.45);
+      background: #0B1F3A;
+    }
+  </style>
+</head>
+<body id="inicio" class="min-h-screen flex flex-col">
+
+  <!-- HEADER -->
+  <header class="hero-gradient text-white shadow-xl">
+    <div class="hero-orb hero-orb-1"></div>
+    <div class="hero-orb hero-orb-2"></div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Top nav bar -->
+      <div class="flex flex-wrap items-center justify-between gap-3 py-2.5 border-b border-white/15">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-xl bg-white/15 backdrop-blur-md border border-white/25 flex items-center justify-center shadow-inner shrink-0">
+            <svg class="w-5 h-5 text-sky-300" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 12h3.5l2.2-6 4.2 12 2.5-6H21" />
+            </svg>
+          </div>
+          <div>
+            <span class="block text-[11px] uppercase tracking-wider text-sky-300 font-semibold">RECREACIÓN Y DEPORTE - DOCENTE: NINY LISBETH QUEVEDO MOJICA</span>
+            <span class="block text-sm sm:text-base font-bold tracking-tight">Evaluación Física · Diego Fuentes</span>
+          </div>
+        </div>
+
+        <nav aria-label="Vistas del dashboard" class="flex flex-wrap items-center gap-1.5 sm:gap-2 text-sm font-semibold">
+          <button type="button" data-view-target="resumen" class="nav-tab active px-3.5 py-1.5 rounded-xl border border-transparent text-blue-100 hover:text-white hover:bg-white/10 cursor-pointer flex items-center gap-1.5">
+            <svg class="w-4 h-4 text-sky-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+            </svg>
+            Resumen
+          </button>
+          <button type="button" data-view-target="datos" class="nav-tab px-3.5 py-1.5 rounded-xl border border-transparent text-blue-100 hover:text-white hover:bg-white/10 cursor-pointer flex items-center gap-1.5">
+            <svg class="w-4 h-4 text-sky-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M3 14h18m-9-4v8m-7 0h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+            </svg>
+            Datos
+          </button>
+          <button type="button" data-view-target="evidencia" class="nav-tab px-3.5 py-1.5 rounded-xl border border-transparent text-blue-100 hover:text-white hover:bg-white/10 cursor-pointer flex items-center gap-1.5">
+            <svg class="w-4 h-4 text-sky-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+            Evidencia
+          </button>
+        </nav>
+      </div>
+
+      <!-- Hero content (compact 2-column horizontal layout) -->
+      <div class="py-3 sm:py-3.5 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 lg:gap-6">
+        <h1 class="text-xl sm:text-2xl lg:text-[26px] font-extrabold tracking-tight leading-tight shrink-0">
+          Panel Interactivo de Rendimiento Físico
+        </h1>
+        <p class="text-blue-100/90 text-xs sm:text-sm leading-snug max-w-xl">
+          Se presenta el siguiente análisis evolutivo que evidencia el registro de algunos test físicos aplicados, como resistencia, uso de mancuernas de 5 kg, salto longitudinal y respuesta cardiovascular (Test de Ruffier) entre la <strong class="text-white">Tutoría 1</strong> y la <strong class="text-white">Tutoría 5</strong>.
+        </p>
+      </div>
+    </div>
+  </header>
+
+  <!-- STICKY MODE SELECTOR BAR (shown on Vista 1 & Vista 2) -->
+  <div id="modeSelectorBar" class="sticky top-0 z-30 bg-white/90 backdrop-blur-md border-b border-slate-200/80 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-1.5 flex flex-col sm:flex-row items-center justify-between gap-2">
+      <div class="flex items-center gap-2 text-xs sm:text-sm font-semibold text-slate-600">
+        <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+        </svg>
+        <span>Modo de visualización:</span>
+      </div>
+
+      <div role="tablist" aria-label="Selector de tutoría" class="inline-flex p-1 rounded-xl bg-slate-100 border border-slate-200 w-full sm:w-auto justify-center">
+        <button type="button" role="tab" data-mode="compare" aria-selected="true" class="seg-btn active flex-1 sm:flex-none px-3.5 sm:px-5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold text-slate-700 cursor-pointer">
+          Comparar T1 vs T5
+        </button>
+        <button type="button" role="tab" data-mode="t1" aria-selected="false" class="seg-btn flex-1 sm:flex-none px-3.5 sm:px-5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold text-slate-700 hover:text-blue-700 cursor-pointer">
+          Solo Tutoría 1
+        </button>
+        <button type="button" role="tab" data-mode="t5" aria-selected="false" class="seg-btn flex-1 sm:flex-none px-3.5 sm:px-5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold text-slate-700 hover:text-sky-600 cursor-pointer">
+          Solo Tutoría 5
+        </button>
+      </div>
+
+      <div class="flex items-center gap-3 text-xs font-medium text-slate-600">
+        <span id="headerModeBadge" class="sr-only">Vista activa: Comparación Tutoría 1 vs. Tutoría 5</span>
+        <span class="hidden lg:inline-flex items-center gap-1.5">
+          <span class="w-2.5 h-2.5 rounded-sm bg-[#1E40AF]"></span> Tutoría 1
+        </span>
+        <span class="hidden lg:inline-flex items-center gap-1.5">
+          <span class="w-2.5 h-2.5 rounded-sm bg-[#0EA5E9]"></span> Tutoría 5
+        </span>
+        <button id="replayAnimBtn" type="button" title="Reproducir animaciones" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-blue-50 hover:bg-blue-100 active:scale-95 border border-blue-200/80 text-blue-700 text-xs font-semibold transition cursor-pointer">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+          </svg>
+          <span class="hidden sm:inline">Animar</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-4">
+
+    <!-- ==================== VISTA 1: RESUMEN ==================== -->
+    <div id="view-resumen" class="view-panel active-view space-y-3.5">
+
+      <!-- TWO-COLUMN DASHBOARD LAYOUT MATCHING REFERENCE DESIGN -->
+      <section class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-start lg:items-stretch">
+
+        <!-- LEFT COLUMN (7 cols): Main Physical Tests Chart (Lines default) + Asthma Observations Card -->
+        <div class="lg:col-span-7 flex flex-col gap-4 h-full">
+          <!-- Main Physical Performance Chart -->
+          <div class="glass-card rounded-2xl p-4 flex flex-col flex-1 justify-between">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2.5 border-b border-slate-100">
+              <div>
+                <h2 class="text-base font-bold text-slate-900">Desempeño en Pruebas Físicas</h2>
+                <p id="mainChartSubtitle" class="text-xs text-slate-500">
+                  Visualización en líneas — Tutoría 1 vs. Tutoría 5
+                </p>
+              </div>
+
+              <!-- Chart Type Toggle (Líneas active by default) -->
+              <div class="inline-flex items-center gap-1 p-1 rounded-xl bg-slate-100 border border-slate-200 self-start sm:self-auto">
+                <button type="button" data-chart-type="bar" class="chart-type-btn seg-btn px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-700 cursor-pointer flex items-center gap-1.5">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6m6 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0h6m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14" />
+                  </svg>
+                  Barras
+                </button>
+                <button type="button" data-chart-type="line" class="chart-type-btn seg-btn active px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-700 cursor-pointer flex items-center gap-1.5">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 17l6-6 4 4 8-8" />
+                  </svg>
+                  Líneas
+                </button>
+              </div>
+            </div>
+
+            <!-- Category filter chips -->
+            <div class="flex flex-wrap items-center gap-1.5 py-2.5">
+              <button type="button" data-chart-cat="all_reps" class="chart-cat-btn chip-btn active px-3 py-1.5 rounded-full text-xs font-semibold border border-slate-200 bg-white text-slate-600 cursor-pointer">
+                Todas (Reps y Vueltas)
+              </button>
+              <button type="button" data-chart-cat="resistencia" class="chart-cat-btn chip-btn px-3 py-1.5 rounded-full text-xs font-semibold border border-slate-200 bg-white text-slate-600 hover:border-blue-300 cursor-pointer">
+                Resistencia y Core
+              </button>
+              <button type="button" data-chart-cat="fuerza" class="chart-cat-btn chip-btn px-3 py-1.5 rounded-full text-xs font-semibold border border-slate-200 bg-white text-slate-600 hover:border-blue-300 cursor-pointer">
+                Fuerza (Mancuerna 5kg)
+              </button>
+            </div>
+
+            <!-- Fixed height chart container -->
+            <div class="relative h-64 lg:h-[310px] w-full mt-0.5">
+              <canvas id="mainPhysicalChart"></canvas>
+            </div>
+
+            <p class="mt-2 text-[11px] text-slate-500 flex items-center gap-1.5">
+              <svg class="w-4 h-4 text-blue-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span>El Salto (cm) se presenta en su gráfico independiente para preservar una escala visual clara.</span>
+            </p>
+          </div>
+
+          <!-- Clinical Observations Highlight Card (Bottom Left) -->
+          <div class="rounded-2xl p-4 bg-gradient-to-br from-[#0B1F3A] via-[#0F2D5C] to-[#1D4ED8] text-white shadow-lg">
+            <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-400/20 border border-amber-300/40 text-amber-200 text-[11px] font-semibold mb-2">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01M5.07 19h13.86c1.54 0 2.5-1.67 1.73-3L13.73 4c-.77-1.33-2.69-1.33-3.46 0L3.34 16c-.77 1.33.19 3 1.73 3z" />
+              </svg>
+              Observaciones de Salud (ASMA)
+            </div>
+            <h3 class="text-sm sm:text-base font-bold leading-snug">Superación clave entre Tutoría 1 y Tutoría 5</h3>
+            <p class="mt-1 text-xs text-blue-100 leading-snug">
+              En la <strong class="text-white">Tutoría 1</strong>, dos pruebas se registraron con la observación <em>"No completado por ASMA"</em>. Para la <strong class="text-white">Tutoría 5</strong>, ambas se completaron sin interrupción (Haciendo uso del inhalador) dejando el siguiente resultado de mejora:
+            </p>
+
+            <div class="mt-2.5 grid grid-cols-1 sm:grid-cols-2 gap-2">
+              <div class="flex items-center justify-between px-3 py-1.5 rounded-xl bg-white/10 border border-white/15">
+                <span class="text-xs font-medium text-blue-100">Test de Cooper</span>
+                <span class="text-xs font-bold text-sky-300">13 → 22 (+69.2%)</span>
+              </div>
+              <div class="flex items-center justify-between px-3 py-1.5 rounded-xl bg-white/10 border border-white/15">
+                <span class="text-xs font-medium text-blue-100">Sentadillas</span>
+                <span class="text-xs font-bold text-sky-300">0 → 30 (Completado)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT COLUMN (5 cols): Salto Longitudinal + Cardiovascular & Ruffier -->
+        <div class="lg:col-span-5 flex flex-col gap-4">
+          <!-- Salto dedicated chart (Top Right) -->
+          <div class="glass-card rounded-2xl p-4">
+            <div class="flex items-center justify-between gap-2 mb-2">
+              <div>
+                <h2 class="text-sm sm:text-base font-bold text-slate-900">Salto Longitudinal (cm)</h2>
+                <p class="text-[11px] text-slate-500">Medición en centímetros</p>
+              </div>
+              <span id="saltoDeltaBadge" class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-rose-50 text-rose-700">-47 cm (-26.7%)</span>
+            </div>
+            <div class="relative h-40 lg:h-[155px] w-full">
+              <canvas id="saltoChart"></canvas>
+            </div>
+          </div>
+
+          <!-- Cardiovascular & Ruffier Card (Middle/Bottom Right) -->
+          <div class="glass-card rounded-2xl p-4 space-y-2.5">
+            <div class="flex items-start gap-2 pb-2 border-b border-slate-100">
+              <div class="w-7 h-7 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 mt-0.5">
+                <svg class="w-4 h-4 pulse-heart" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M3 12h3.5l2.2-6 4.2 12 2.5-6H21" />
+                </svg>
+              </div>
+              <div>
+                <h2 class="text-sm sm:text-base font-bold text-slate-900 leading-tight">Respuesta Cardiovascular y Test de Ruffier</h2>
+                <p class="text-[11px] text-slate-500">Curva de frecuencia cardíaca (Pulso 1 reposo → Pulso 2 esfuerzo → Pulso 3 recuperación)</p>
+              </div>
+            </div>
+
+            <!-- Pulse line chart -->
+            <div class="relative h-44 lg:h-[168px] w-full">
+              <canvas id="ruffierChart"></canvas>
+            </div>
+
+            <!-- Formula pill -->
+            <div class="flex justify-end">
+              <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-blue-50 text-blue-700 border border-blue-100">
+                Fórmula Excel: ((P1 + P2 + P3) − 200) / 100
+              </span>
+            </div>
+
+            <!-- 3 Pulse readout cards -->
+            <div class="grid grid-cols-3 gap-2">
+              <div class="p-2 rounded-xl bg-slate-50 border border-slate-200/80 text-center">
+                <p class="text-[10px] font-bold uppercase tracking-wider text-slate-500">Pulso 1</p>
+                <p class="text-[10px] text-slate-400">Reposo</p>
+                <p id="p1Readout" class="mt-0.5 text-sm font-extrabold text-slate-900 tabular-nums">83 / 83</p>
+                <p class="text-[10px] text-slate-500">lpm</p>
+              </div>
+              <div class="p-2 rounded-xl bg-slate-50 border border-slate-200/80 text-center">
+                <p class="text-[10px] font-bold uppercase tracking-wider text-slate-500">Pulso 2</p>
+                <p class="text-[10px] text-slate-400">Esfuerzo</p>
+                <p id="p2Readout" class="mt-0.5 text-sm font-extrabold text-blue-700 tabular-nums">105 / 157</p>
+                <p class="text-[10px] text-slate-500">lpm</p>
+              </div>
+              <div class="p-2 rounded-xl bg-slate-50 border border-slate-200/80 text-center">
+                <p class="text-[10px] font-bold uppercase tracking-wider text-slate-500">Pulso 3</p>
+                <p class="text-[10px] text-slate-400">Recuperación</p>
+                <p id="p3Readout" class="mt-0.5 text-sm font-extrabold text-sky-600 tabular-nums">92 / 91</p>
+                <p class="text-[10px] text-slate-500">lpm</p>
+              </div>
+            </div>
+
+            <!-- Ruffier Insight Box -->
+            <div class="p-2.5 rounded-xl bg-blue-50/80 border border-blue-200/70">
+              <div class="flex flex-wrap items-center justify-between gap-1.5">
+                <span class="text-[10px] font-bold uppercase tracking-wider text-blue-900">Resultado Índice de Ruffier</span>
+                <span id="ruffierComparePill" class="text-[10px] font-bold text-blue-700 bg-white px-2 py-0.5 rounded-full border border-blue-200">T1: 0.80 · T5: 1.31</span>
+              </div>
+              <p class="mt-1 text-[11px] text-slate-700 leading-snug">
+                En la Tutoría 5, el <strong>Pulso 2</strong> subió a <strong>157 lpm</strong> al completar las 22 vueltas del test de cooper aplicado en 12 minutos (que en T1 no se completaron por asma), pero la recuperación al minuto (<strong>Pulso 3 = 91 lpm</strong>) fue incluso 1 lpm más baja que en Tutoría 1 (92 lpm), evidenciando buena capacidad de recuperación cardíaca.
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- COMPACT KPI CARDS SECTION -->
+      <section aria-label="Indicadores clave" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+        <!-- KPI 1: Test de Cooper -->
+        <article class="glass-card kpi-card rounded-xl px-3.5 py-2.5 animate-in delay-1">
+          <div class="flex items-center justify-between gap-2">
+            <div>
+              <p class="text-[10px] font-bold uppercase tracking-wider text-slate-500">Test de Cooper</p>
+              <h2 class="text-[10px] text-slate-400">Vueltas en 12 min</h2>
+            </div>
+            <div class="w-7 h-7 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+            </div>
+          </div>
+          <div class="mt-1 flex items-baseline gap-1.5">
+            <span id="kpiCooperValue" class="text-xl font-extrabold text-slate-900 tabular-nums">22</span>
+            <span class="text-[11px] font-medium text-slate-500">vueltas</span>
+          </div>
+          <div id="kpiCooperSub" class="mt-1 text-[10px] font-semibold text-emerald-700 bg-emerald-50 inline-flex items-center gap-1 px-2 py-0.5 rounded-full">
+            +9 vueltas (+69.2%) vs T1 (13)
+          </div>
+        </article>
+
+        <!-- KPI 2: Volumen total reps/vueltas -->
+        <article class="glass-card kpi-card rounded-xl px-3.5 py-2.5 animate-in delay-2">
+          <div class="flex items-center justify-between gap-2">
+            <div>
+              <p class="text-[10px] font-bold uppercase tracking-wider text-slate-500">Volumen Total</p>
+              <h2 class="text-[10px] text-slate-400">Suma reps y vueltas (8 pruebas)</h2>
+            </div>
+            <div class="w-7 h-7 rounded-lg bg-sky-50 text-sky-600 flex items-center justify-center shrink-0">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+              </svg>
+            </div>
+          </div>
+          <div class="mt-1 flex items-baseline gap-1.5">
+            <span id="kpiVolumeValue" class="text-xl font-extrabold text-slate-900 tabular-nums">189</span>
+            <span class="text-[11px] font-medium text-slate-500">total</span>
+          </div>
+          <div id="kpiVolumeSub" class="mt-1 text-[10px] font-semibold text-emerald-700 bg-emerald-50 inline-flex items-center gap-1 px-2 py-0.5 rounded-full">
+            +16 (+9.2%) respecto a T1 (173)
+          </div>
+        </article>
+
+        <!-- KPI 3: Salto -->
+        <article class="glass-card kpi-card rounded-xl px-3.5 py-2.5 animate-in delay-3">
+          <div class="flex items-center justify-between gap-2">
+            <div>
+              <p class="text-[10px] font-bold uppercase tracking-wider text-slate-500">Salto Longitudinal</p>
+              <h2 class="text-[10px] text-slate-400">Potencia de tren inferior</h2>
+            </div>
+            <div class="w-7 h-7 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center shrink-0">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+              </svg>
+            </div>
+          </div>
+          <div class="mt-1 flex items-baseline gap-1.5">
+            <span id="kpiSaltoValue" class="text-xl font-extrabold text-slate-900 tabular-nums">129</span>
+            <span class="text-[11px] font-medium text-slate-500">cm</span>
+          </div>
+          <div id="kpiSaltoSub" class="mt-1 text-[10px] font-semibold text-rose-700 bg-rose-50 inline-flex items-center gap-1 px-2 py-0.5 rounded-full">
+            -47 cm (-26.7%) vs T1 (176 cm)
+          </div>
+        </article>
+
+        <!-- KPI 4: Índice de Ruffier -->
+        <article class="glass-card kpi-card rounded-xl px-3.5 py-2.5 animate-in delay-4">
+          <div class="flex items-center justify-between gap-2">
+            <div>
+              <p class="text-[10px] font-bold uppercase tracking-wider text-slate-500">Índice de Ruffier</p>
+              <h2 class="text-[10px] text-slate-400">((P1+P2+P3) − 200) / 100</h2>
+            </div>
+            <div class="w-7 h-7 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+              <svg class="w-3.5 h-3.5 pulse-heart text-blue-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+              </svg>
+            </div>
+          </div>
+          <div class="mt-1 flex items-baseline gap-1.5">
+            <span id="kpiRuffierValue" class="text-xl font-extrabold text-slate-900 tabular-nums">1.31</span>
+            <span class="text-[11px] font-medium text-slate-500">índice</span>
+          </div>
+          <div id="kpiRuffierSub" class="mt-1 text-[10px] font-semibold text-blue-700 bg-blue-50 inline-flex items-center gap-1 px-2 py-0.5 rounded-full">
+            T1: 0.80 → T5: 1.31 (+0.51)
+          </div>
+        </article>
+      </section>
+    </div>
+
+    <!-- ==================== VISTA 2: DATOS (DETALLE COMPLETO) ==================== -->
+    <div id="view-datos" class="view-panel">
+      <section class="glass-card rounded-2xl p-5 sm:p-6">
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-slate-100">
+          <div>
+            <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-700 text-[11px] font-bold uppercase tracking-wider mb-1">
+              Vista 2 · Registro completo
+            </div>
+            <h2 class="text-xl font-bold text-slate-900">Detalle Completo de Pruebas</h2>
+            <p class="text-xs sm:text-sm text-slate-500 mt-0.5">Haz clic en cualquier fila para inspeccionar su evolución detallada</p>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-2">
+            <select id="tableCategorySelect" aria-label="Filtrar por categoría" class="px-3 py-2 rounded-xl border border-slate-200 bg-slate-50 text-xs sm:text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer">
+              <option value="all">Todas las categorías (13)</option>
+              <option value="resistencia">Resistencia y Core (5)</option>
+              <option value="fuerza">Fuerza — Mancuerna 5kg (3)</option>
+              <option value="salto">Salto (1)</option>
+              <option value="cardio">Cardiovascular y Ruffier (4)</option>
+            </select>
+
+            <select id="tableStatusSelect" aria-label="Filtrar por estado" class="px-3 py-2 rounded-xl border border-slate-200 bg-slate-50 text-xs sm:text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer">
+              <option value="all">Todos los estados</option>
+              <option value="improved">Mejoró en T5</option>
+              <option value="decreased">Disminuyó en T5</option>
+              <option value="obs">Con observación</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Interactive Spotlight Banner -->
+        <div id="spotlightCard" class="mt-5 p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-blue-50 via-sky-50/70 to-white border border-blue-200/80 flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wider bg-blue-600 text-white">Prueba seleccionada</span>
+              <span id="spotCategory" class="text-xs font-semibold text-blue-700">Resistencia y Core</span>
+            </div>
+            <h3 id="spotTitle" class="mt-1.5 text-base sm:text-lg font-extrabold text-slate-900">Test de Cooper (Vueltas en 12m)</h3>
+            <p id="spotObs" class="mt-1 text-xs sm:text-sm text-slate-600">Observación T1: No completado por ASMA · T5: Completado sin novedades.</p>
+          </div>
+
+          <div class="flex items-center gap-3 sm:gap-5 shrink-0">
+            <div class="text-center px-3.5 py-2 rounded-xl bg-white border border-slate-200 shadow-sm min-w-[84px]">
+              <span class="block text-[11px] font-semibold text-slate-400">Tutoría 1</span>
+              <span id="spotT1" class="text-lg font-extrabold text-[#1E40AF] tabular-nums">13</span>
+            </div>
+            <div class="text-slate-400 font-bold">→</div>
+            <div class="text-center px-3.5 py-2 rounded-xl bg-white border border-slate-200 shadow-sm min-w-[84px]">
+              <span class="block text-[11px] font-semibold text-slate-400">Tutoría 5</span>
+              <span id="spotT5" class="text-lg font-extrabold text-[#0EA5E9] tabular-nums">22</span>
+            </div>
+            <div class="text-center px-3.5 py-2 rounded-xl bg-blue-600 text-white shadow-sm min-w-[92px]">
+              <span class="block text-[11px] font-medium text-blue-100">Variación</span>
+              <span id="spotDiff" class="text-sm sm:text-base font-extrabold tabular-nums">+9 (+69.2%)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Responsive Table -->
+        <div class="mt-5 overflow-x-auto">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="border-b border-slate-200 text-[11px] uppercase tracking-wider text-slate-500 font-bold">
+                <th class="py-3 px-3">Prueba / Ítem</th>
+                <th id="thT1" class="py-3 px-3 text-right">Tutoría 1</th>
+                <th id="thT5" class="py-3 px-3 text-right">Tutoría 5</th>
+                <th id="thDiff" class="py-3 px-3 text-center">Variación</th>
+                <th class="py-3 px-3 hidden sm:table-cell">Progreso relativo</th>
+                <th class="py-3 px-3">Observaciones</th>
+              </tr>
+            </thead>
+            <tbody id="dataTableBody" class="divide-y divide-slate-100 text-sm">
+              <!-- Populated dynamically by JS -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    <!-- ==================== VISTA 3: EVIDENCIA FOTOGRÁFICA (.webp) ==================== -->
+    <div id="view-evidencia" class="view-panel">
+      <section class="glass-card rounded-2xl p-5 sm:p-6 space-y-6">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-slate-100">
+          <div>
+            <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-sky-50 text-sky-700 text-[11px] font-bold uppercase tracking-wider mb-1">
+              Vista 3 · Registro visual
+            </div>
+            <h2 class="text-xl font-bold text-slate-900">Evidencia Fotográfica</h2>
+            <p class="text-xs sm:text-sm text-slate-500 mt-0.5">
+              En este espacio se encuentran las evidencias cargadas de las respectivas<code class="px-1.5 py-0.5 rounded bg-blue-50 text-blue-700 font-semibold">evidencias</code> firmadas por la docente.
+            </p>
+          </div>
+          <button id="reloadEvidenceBtn" type="button" style="display: none;" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-blue-50 hover:bg-blue-100 text-blue-700 text-xs font-semibold border border-blue-200 transition cursor-pointer self-start md:self-auto">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+            </svg>
+            Recargar desde raíz
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Evidencia 1 -->
+          <article class="rounded-2xl border border-slate-200 bg-white overflow-hidden shadow-sm flex flex-col">
+            <div class="px-4 py-3 bg-gradient-to-r from-[#0F2D5C] to-[#1E40AF] text-white flex items-center justify-between gap-2">
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-sky-300"></span>
+                <h3 class="text-sm font-bold">Evidencia 1 · Tutoría 1</h3>
+              </div>
+            </div>
+
+            <div class="p-4 flex-1 flex flex-col gap-3">
+              <div id="evidenceFrame1" class="evidence-frame relative rounded-xl overflow-hidden aspect-[4/3] flex items-center justify-center">
+                <img id="evidenceImg1" alt="Evidencia fotográfica 1 — Tutoría 1" class="hidden w-full h-full object-cover cursor-zoom-in transition duration-300 hover:scale-[1.02]" />
+                <div id="evidencePlaceholder1" class="p-6 text-center max-w-xs">
+                  <div class="w-12 h-12 mx-auto rounded-2xl bg-blue-100 text-blue-600 flex items-center justify-center mb-3">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                  </div>
+                  <p class="text-sm font-bold text-slate-800">Esperando evidencia1.webp</p>
+                  <p class="mt-1 text-xs text-slate-500 leading-relaxed">
+                    Guarda tu imagen como <strong>evidencia1.webp</strong> en la misma carpeta de este archivo HTML, o selecciónala abajo para previsualizarla.
+                  </p>
+                </div>
+              </div>
+
+              <div class="hidden flex flex-wrap items-center justify-between gap-2 pt-1">
+                <span id="evidenceStatus1" class="text-xs text-slate-500 font-medium">Ruta esperada: ./evidencia1.webp</span>
+                <label class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold transition cursor-pointer">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                  </svg>
+                  <input id="evidenceInput1" type="file" accept="image/webp,.webp,image/*" class="hidden" />
+                </label>
+              </div>
+            </div>
+          </article>
+
+          <!-- Evidencia 2 -->
+          <article class="rounded-2xl border border-slate-200 bg-white overflow-hidden shadow-sm flex flex-col">
+            <div class="px-4 py-3 bg-gradient-to-r from-[#1D4ED8] to-[#0EA5E9] text-white flex items-center justify-between gap-2">
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-white"></span>
+                <h3 class="text-sm font-bold">Evidencia 2 · Tutoría 5</h3>
+              </div>
+            </div>
+
+            <div class="p-4 flex-1 flex flex-col gap-3">
+              <div id="evidenceFrame2" class="evidence-frame relative rounded-xl overflow-hidden aspect-[4/3] flex items-center justify-center">
+                <img id="evidenceImg2" alt="Evidencia fotográfica 2 — Tutoría 5" class="hidden w-full h-full object-cover cursor-zoom-in transition duration-300 hover:scale-[1.02]" />
+                <div id="evidencePlaceholder2" class="p-6 text-center max-w-xs">
+                  <div class="w-12 h-12 mx-auto rounded-2xl bg-sky-100 text-sky-600 flex items-center justify-center mb-3">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                  </div>
+                  <p class="text-sm font-bold text-slate-800">Esperando evidencia2.webp</p>
+                  <p class="mt-1 text-xs text-slate-500 leading-relaxed">
+                    Guarda tu imagen como <strong>evidencia2.webp</strong> en la misma carpeta de este archivo HTML, o selecciónala abajo para previsualizarla.
+                  </p>
+                </div>
+              </div>
+
+              <div class="hidden flex-wrap items-center justify-between gap-2 pt-1">
+                <span id="evidenceStatus2" class="text-xs text-slate-500 font-medium">Ruta esperada: ./evidencia2.webp</span>
+                <label class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-sky-600 hover:bg-sky-700 text-white text-xs font-semibold transition cursor-pointer">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                  </svg>
+                  <input id="evidenceInput2" type="file" accept="image/webp,.webp,image/*" class="hidden" />
+                </label>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+    </div>
+
+  </main>
+
+  <!-- LIGHTBOX MODAL FOR EVIDENCE PHOTOS -->
+  <div id="lightboxModal" class="hidden fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-sm p-4 flex items-center justify-center">
+    <div class="relative max-w-4xl w-full bg-[#071730] rounded-2xl overflow-hidden border border-white/15 shadow-2xl">
+      <div class="flex items-center justify-between px-4 py-3 border-b border-white/10 text-white">
+        <span id="lightboxCaption" class="text-sm font-bold">Evidencia Fotográfica</span>
+        <button id="closeLightboxBtn" type="button" class="px-3 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-xs font-semibold cursor-pointer">
+          Cerrar ✕
+        </button>
+      </div>
+      <div class="p-4 flex items-center justify-center bg-slate-950/60">
+        <img id="lightboxImg" alt="Vista ampliada de evidencia" class="max-h-[75vh] max-w-full h-auto rounded-lg object-contain" />
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="bg-[#071730] text-slate-300 mt-6 border-t border-blue-900/60">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div class="text-center sm:text-left">
+        <div class="flex items-center justify-center sm:justify-start gap-2 text-white font-bold text-sm">
+          <span class="w-2.5 h-2.5 rounded-full bg-sky-400"></span>
+          <span>Dashboard de Evaluación Física · Recreación y Deporte</span>
+        </div>
+        <p class="mt-1 text-xs text-slate-400">
+          Datos procesados de <span class="text-sky-300 font-medium">Test Diego.xlsx</span> (Tutoría 1 y Tutoría 5) · Fórmula Ruffier: ((P1+P2+P3) − 200) / 100
+        </p>
+      </div>
+
+      <a href="#inicio" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-semibold transition">
+        <svg class="w-3.5 h-3.5 text-sky-300" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7" />
+        </svg>
+        Volver arriba
+      </a>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      'use strict';
+
+      // Exact verified dataset from Test Diego.xlsx (Hoja1)
+      const TEST_DATA = [
+        {
+          id: 'cooper',
+          name: 'Test de Cooper (Vueltas en 12m)',
+          shortName: 'Test de Cooper',
+          category: 'resistencia',
+          categoryLabel: 'Resistencia y Core',
+          unit: 'vueltas',
+          t1: 13,
+          obsT1: 'No completado por ASMA',
+          t5: 22,
+          obsT5: '',
+          trend: 'improved'
+        },
+        {
+          id: 'abdominales',
+          name: 'Abdominales',
+          shortName: 'Abdominales',
+          category: 'resistencia',
+          categoryLabel: 'Resistencia y Core',
+          unit: 'reps',
+          t1: 28,
+          obsT1: '',
+          t5: 16,
+          obsT5: '',
+          trend: 'decreased'
+        },
+        {
+          id: 'dorsales',
+          name: 'Dorsales',
+          shortName: 'Dorsales',
+          category: 'resistencia',
+          categoryLabel: 'Resistencia y Core',
+          unit: 'reps',
+          t1: 42,
+          obsT1: '',
+          t5: 32,
+          obsT5: '',
+          trend: 'decreased'
+        },
+        {
+          id: 'semiburpies',
+          name: 'Semi Burpies',
+          shortName: 'Semi Burpies',
+          category: 'resistencia',
+          categoryLabel: 'Resistencia y Core',
+          unit: 'reps',
+          t1: 13,
+          obsT1: '',
+          t5: 12,
+          obsT5: '',
+          trend: 'decreased'
+        },
+        {
+          id: 'salto',
+          name: 'Salto',
+          shortName: 'Salto',
+          category: 'salto',
+          categoryLabel: 'Potencia (Salto)',
+          unit: 'cm',
+          t1: 176,
+          obsT1: 'Cms',
+          t5: 129,
+          obsT5: 'Cms',
+          trend: 'decreased'
+        },
+        {
+          id: 'sentadillas',
+          name: 'Sentadillas',
+          shortName: 'Sentadillas',
+          category: 'resistencia',
+          categoryLabel: 'Resistencia y Core',
+          unit: 'reps',
+          t1: 0,
+          obsT1: 'No completado por ASMA',
+          t5: 30,
+          obsT5: '',
+          trend: 'improved'
+        },
+        {
+          id: 'bicep',
+          name: 'Bicep (Con mancuerna de 5kg)',
+          shortName: 'Bícep (5kg)',
+          category: 'fuerza',
+          categoryLabel: 'Fuerza (Mancuerna 5kg)',
+          unit: 'reps',
+          t1: 21,
+          obsT1: '',
+          t5: 24,
+          obsT5: '',
+          trend: 'improved'
+        },
+        {
+          id: 'tricep',
+          name: 'Tricep (Con mancuerna de 5kg)',
+          shortName: 'Trícep (5kg)',
+          category: 'fuerza',
+          categoryLabel: 'Fuerza (Mancuerna 5kg)',
+          unit: 'reps',
+          t1: 26,
+          obsT1: '',
+          t5: 33,
+          obsT5: '',
+          trend: 'improved'
+        },
+        {
+          id: 'hombro',
+          name: 'Hombro (Con mancuerna de 5kg)',
+          shortName: 'Hombro (5kg)',
+          category: 'fuerza',
+          categoryLabel: 'Fuerza (Mancuerna 5kg)',
+          unit: 'reps',
+          t1: 30,
+          obsT1: '',
+          t5: 20,
+          obsT5: '',
+          trend: 'decreased'
+        },
+        {
+          id: 'pulso1',
+          name: 'Pulso 1 (Reposo)',
+          shortName: 'Pulso 1',
+          category: 'cardio',
+          categoryLabel: 'Cardiovascular',
+          unit: 'lpm',
+          t1: 83,
+          obsT1: '',
+          t5: 83,
+          obsT5: '',
+          trend: 'neutral'
+        },
+        {
+          id: 'pulso2',
+          name: 'Pulso 2 (Esfuerzo)',
+          shortName: 'Pulso 2',
+          category: 'cardio',
+          categoryLabel: 'Cardiovascular',
+          unit: 'lpm',
+          t1: 105,
+          obsT1: '',
+          t5: 157,
+          obsT5: '',
+          trend: 'neutral'
+        },
+        {
+          id: 'pulso3',
+          name: 'Pulso 3 (Recuperación)',
+          shortName: 'Pulso 3',
+          category: 'cardio',
+          categoryLabel: 'Cardiovascular',
+          unit: 'lpm',
+          t1: 92,
+          obsT1: '',
+          t5: 91,
+          obsT5: '',
+          trend: 'improved'
+        },
+        {
+          id: 'ruffier',
+          name: 'Índice de Ruffier ((P1+P2+P3)-200)/100',
+          shortName: 'Ruffier',
+          category: 'cardio',
+          categoryLabel: 'Cardiovascular',
+          unit: 'índice',
+          t1: 0.8,
+          obsT1: '',
+          t5: 1.31,
+          obsT5: '',
+          trend: 'neutral',
+          decimals: 2
+        }
+      ];
+
+      const EVIDENCE_FILES = {
+        1: { filename: 'evidencia1.webp', title: 'Evidencia 1 · Tutoría 1' },
+        2: { filename: 'evidencia2.webp', title: 'Evidencia 2 · Tutoría 5' }
+      };
+
+      const state = {
+        activeView: 'resumen',  // 'resumen' | 'datos' | 'evidencia'
+        viewMode: 'compare',    // 'compare' | 't1' | 't5'
+        chartType: 'line',      // Default to 'line' per user request
+        chartCategory: 'all_reps', // 'all_reps' | 'resistencia' | 'fuerza'
+        tableCategory: 'all',
+        tableStatus: 'all',
+        selectedItemId: 'cooper'
+      };
+
+      const COLORS = {
+        t1Solid: '#1E40AF',
+        t1Fill: 'rgba(30, 64, 175, 0.84)',
+        t1Area: 'rgba(30, 64, 175, 0.16)',
+        t5Solid: '#0EA5E9',
+        t5Fill: 'rgba(14, 165, 233, 0.88)',
+        t5Area: 'rgba(14, 165, 233, 0.18)'
+      };
+
+      let mainChart = null;
+      let saltoChart = null;
+      let ruffierChart = null;
+      const counterFrames = new Map();
+
+      function formatValue(val, decimals) {
+        if (decimals) return Number(val).toFixed(decimals);
+        return String(val);
+      }
+
+      function computeDiffText(item) {
+        const diff = item.t5 - item.t1;
+        const sign = diff > 0 ? '+' : '';
+        if (item.decimals) {
+          return `${sign}${diff.toFixed(item.decimals)}`;
+        }
+        if (item.t1 === 0 && item.t5 > 0) {
+          return `+${diff} (Completado)`;
+        }
+        if (diff === 0) {
+          return '0 (Igual)';
+        }
+        const pct = ((diff / item.t1) * 100).toFixed(1);
+        return `${sign}${diff} (${sign}${pct}%)`;
+      }
+
+      function animateCounter(el, targetValue, decimals) {
+        if (!el) return;
+        if (counterFrames.has(el)) {
+          cancelAnimationFrame(counterFrames.get(el));
+        }
+        const duration = 680;
+        const startTime = performance.now();
+
+        function step(now) {
+          const elapsed = now - startTime;
+          const progress = Math.min(elapsed / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 3);
+          const current = targetValue * eased;
+          el.textContent = decimals ? current.toFixed(decimals) : Math.round(current).toString();
+          if (progress < 1) {
+            counterFrames.set(el, requestAnimationFrame(step));
+          } else {
+            el.textContent = decimals ? targetValue.toFixed(decimals) : String(targetValue);
+            counterFrames.delete(el);
+          }
+        }
+        counterFrames.set(el, requestAnimationFrame(step));
+      }
+
+      function getRepsVolume(key) {
+        return TEST_DATA
+          .filter(d => d.category === 'resistencia' || d.category === 'fuerza')
+          .reduce((acc, item) => acc + item[key], 0);
+      }
+
+      function switchView(targetView) {
+        state.activeView = targetView;
+
+        document.querySelectorAll('[data-view-target]').forEach(btn => {
+          const isActive = btn.getAttribute('data-view-target') === targetView;
+          btn.classList.toggle('active', isActive);
+        });
+
+        document.querySelectorAll('.view-panel').forEach(panel => {
+          panel.classList.toggle('active-view', panel.id === `view-${targetView}`);
+        });
+
+        // Show Tutoría selector bar on Vista 1 (Resumen) & Vista 2 (Datos); hide on Vista 3 (Evidencia)
+        const modeBar = document.getElementById('modeSelectorBar');
+        modeBar.style.display = targetView === 'evidencia' ? 'none' : '';
+
+        if (targetView === 'resumen') {
+          renderMainChart();
+          renderSaltoChart();
+          renderRuffierChart();
+        } else if (targetView === 'datos') {
+          renderSpotlight();
+          renderTable();
+        }
+      }
+
+      function updateHeaderAndKpis() {
+        const badge = document.getElementById('headerModeBadge');
+        const modeLabels = {
+          compare: 'Vista activa: Comparación Tutoría 1 vs. Tutoría 5',
+          t1: 'Vista activa: Solo Tutoría 1 (Evaluación Inicial)',
+          t5: 'Vista activa: Solo Tutoría 5 (Evaluación Final)'
+        };
+        badge.textContent = modeLabels[state.viewMode];
+
+        const cooper = TEST_DATA.find(d => d.id === 'cooper');
+        const salto = TEST_DATA.find(d => d.id === 'salto');
+        const ruffier = TEST_DATA.find(d => d.id === 'ruffier');
+        const volT1 = getRepsVolume('t1'); // 173
+        const volT5 = getRepsVolume('t5'); // 189
+
+        const kpiCooperVal = document.getElementById('kpiCooperValue');
+        const kpiCooperSub = document.getElementById('kpiCooperSub');
+        const kpiVolVal = document.getElementById('kpiVolumeValue');
+        const kpiVolSub = document.getElementById('kpiVolumeSub');
+        const kpiSaltoVal = document.getElementById('kpiSaltoValue');
+        const kpiSaltoSub = document.getElementById('kpiSaltoSub');
+        const kpiRuffierVal = document.getElementById('kpiRuffierValue');
+        const kpiRuffierSub = document.getElementById('kpiRuffierSub');
+
+        if (state.viewMode === 't1') {
+          animateCounter(kpiCooperVal, cooper.t1, 0);
+          kpiCooperSub.className = 'mt-1 text-[10px] font-semibold text-amber-800 bg-amber-50 inline-flex items-center gap-1 px-2 py-0.5 rounded-full';
+          kpiCooperSub.textContent = 'Tutoría 1 · No completado por ASMA';
+
+          animateCounter(kpiVolVal, volT1, 0);
+          kpiVolSub.className = 'mt-1 text-[10px] font-semibold text-blue-700 bg-blue-50 inline-flex items-center gap-1 px-2 py-0.5 rounded-full';
+          kpiVolSub.textContent = 'Tutoría 1 · 8 pruebas de reps/vueltas';
+
+          animateCounter(kpiSaltoVal, salto.t1, 0);
+          kpiSaltoSub.className = 'mt-1 text-[10px] font-semibold text-indigo-700 bg-indigo-50 inline-flex items-center gap-1 px-2 py-0.5 rounded-full';
+          kpiSaltoSub.textContent = 'Tutoría 1 · Registro inicial (Cms)';
+
+          animateCounter(kpiRuffierVal, ruffier.t1, 2);
+          kpiRuffierSub.className = 'mt-1 text-[10px] font-semibold text-blue-700 bg-blue-50 inline-flex items-center gap-1 px-2 py-0.5 rounded-full';
+          kpiRuffierSub.textContent = 'Tutoría 1 · P1:83 · P2:105 · P3:92';
+        } else if (state.viewMode === 't5') {
+          animateCounter(kpiCooperVal, cooper.t5, 0);
+          kpiCooperSub.className = 'mt-1 text-[10px] font-semibold text-emerald-700 bg-emerald-50 inline-flex items-center gap-1 px-2 py-0.5 rounded-full';
+          kpiCooperSub.textContent = 'Tutoría 5 · Prueba completada';
+
+          animateCounter(kpiVolVal, volT5, 0);
+          kpiVolSub.className = 'mt-1 text-[10px] font-semibold text-sky-700 bg-sky-50 inline-flex items-center gap-1 px-2 py-0.5 rounded-full';
+          kpiVolSub.textContent = 'Tutoría 5 · 8 pruebas de reps/vueltas';
+
+          animateCounter(kpiSaltoVal, salto.t5, 0);
+          kpiSaltoSub.className = 'mt-1 text-[10px] font-semibold text-sky-700 bg-sky-50 inline-flex items-center gap-1 px-2 py-0.5 rounded-full';
+          kpiSaltoSub.textContent = 'Tutoría 5 · Registro final (Cms)';
+
+          animateCounter(kpiRuffierVal, ruffier.t5, 2);
+          kpiRuffierSub.className = 'mt-1 text-[10px] font-semibold text-sky-700 bg-sky-50 inline-flex items-center gap-1 px-2 py-0.5 rounded-full';
+          kpiRuffierSub.textContent = 'Tutoría 5 · P1:83 · P2:157 · P3:91';
+        } else {
+          animateCounter(kpiCooperVal, cooper.t5, 0);
+          kpiCooperSub.className = 'mt-1 text-[10px] font-semibold text-emerald-700 bg-emerald-50 inline-flex items-center gap-1 px-2 py-0.5 rounded-full';
+          kpiCooperSub.textContent = '+9 vueltas (+69.2%) vs T1 (13)';
+
+          animateCounter(kpiVolVal, volT5, 0);
+          kpiVolSub.className = 'mt-1 text-[10px] font-semibold text-emerald-700 bg-emerald-50 inline-flex items-center gap-1 px-2 py-0.5 rounded-full';
+          kpiVolSub.textContent = '+16 (+9.2%) respecto a T1 (173)';
+
+          animateCounter(kpiSaltoVal, salto.t5, 0);
+          kpiSaltoSub.className = 'mt-1 text-[10px] font-semibold text-rose-700 bg-rose-50 inline-flex items-center gap-1 px-2 py-0.5 rounded-full';
+          kpiSaltoSub.textContent = '-47 cm (-26.7%) vs T1 (176 cm)';
+
+          animateCounter(kpiRuffierVal, ruffier.t5, 2);
+          kpiRuffierSub.className = 'mt-1 text-[10px] font-semibold text-blue-700 bg-blue-50 inline-flex items-center gap-1 px-2 py-0.5 rounded-full';
+          kpiRuffierSub.textContent = 'T1: 0.80 → T5: 1.31 (+0.51)';
+        }
+
+        // Salto badge
+        const saltoBadge = document.getElementById('saltoDeltaBadge');
+        if (state.viewMode === 't1') {
+          saltoBadge.className = 'px-2.5 py-1 rounded-full text-xs font-bold bg-blue-50 text-blue-800';
+          saltoBadge.textContent = 'T1: 176 cm';
+        } else if (state.viewMode === 't5') {
+          saltoBadge.className = 'px-2.5 py-1 rounded-full text-xs font-bold bg-sky-50 text-sky-700';
+          saltoBadge.textContent = 'T5: 129 cm';
+        } else {
+          saltoBadge.className = 'px-2.5 py-1 rounded-full text-xs font-bold bg-rose-50 text-rose-700';
+          saltoBadge.textContent = '-47 cm (-26.7%)';
+        }
+
+        // Ruffier readouts
+        const p1El = document.getElementById('p1Readout');
+        const p2El = document.getElementById('p2Readout');
+        const p3El = document.getElementById('p3Readout');
+        const rPill = document.getElementById('ruffierComparePill');
+        if (state.viewMode === 't1') {
+          p1El.textContent = '83';
+          p2El.textContent = '105';
+          p3El.textContent = '92';
+          rPill.textContent = 'Solo T1: 0.80';
+        } else if (state.viewMode === 't5') {
+          p1El.textContent = '83';
+          p2El.textContent = '157';
+          p3El.textContent = '91';
+          rPill.textContent = 'Solo T5: 1.31';
+        } else {
+          p1El.textContent = '83 / 83';
+          p2El.textContent = '105 / 157';
+          p3El.textContent = '92 / 91';
+          rPill.textContent = 'T1: 0.80 · T5: 1.31';
+        }
+      }
+
+      function getFilteredMainItems() {
+        if (state.chartCategory === 'resistencia') {
+          return TEST_DATA.filter(d => d.category === 'resistencia');
+        }
+        if (state.chartCategory === 'fuerza') {
+          return TEST_DATA.filter(d => d.category === 'fuerza');
+        }
+        return TEST_DATA.filter(d => d.category === 'resistencia' || d.category === 'fuerza');
+      }
+
+      function renderMainChart() {
+        const ctx = document.getElementById('mainPhysicalChart').getContext('2d');
+        const items = getFilteredMainItems();
+        const labels = items.map(d => d.shortName);
+
+        const subtitleEl = document.getElementById('mainChartSubtitle');
+        const modeDesc = state.viewMode === 'compare'
+          ? 'Tutoría 1 vs. Tutoría 5'
+          : state.viewMode === 't1' ? 'Solo Tutoría 1' : 'Solo Tutoría 5';
+        subtitleEl.textContent = `Visualización en ${state.chartType === 'bar' ? 'barras' : 'líneas'} — ${modeDesc}`;
+
+        const datasets = [];
+        const isLine = state.chartType === 'line';
+
+        if (state.viewMode === 'compare' || state.viewMode === 't1') {
+          datasets.push({
+            label: 'Tutoría 1',
+            data: items.map(d => d.t1),
+            backgroundColor: isLine ? COLORS.t1Area : COLORS.t1Fill,
+            borderColor: COLORS.t1Solid,
+            borderWidth: isLine ? 3 : 0,
+            borderRadius: isLine ? 0 : 8,
+            fill: isLine,
+            tension: 0.35,
+            pointRadius: isLine ? 5 : 0,
+            pointHoverRadius: 7,
+            pointBackgroundColor: '#FFFFFF',
+            pointBorderColor: COLORS.t1Solid,
+            pointBorderWidth: 2.5
+          });
+        }
+
+        if (state.viewMode === 'compare' || state.viewMode === 't5') {
+          datasets.push({
+            label: 'Tutoría 5',
+            data: items.map(d => d.t5),
+            backgroundColor: isLine ? COLORS.t5Area : COLORS.t5Fill,
+            borderColor: COLORS.t5Solid,
+            borderWidth: isLine ? 3 : 0,
+            borderRadius: isLine ? 0 : 8,
+            fill: isLine,
+            tension: 0.35,
+            pointRadius: isLine ? 5 : 0,
+            pointHoverRadius: 7,
+            pointBackgroundColor: '#FFFFFF',
+            pointBorderColor: COLORS.t5Solid,
+            pointBorderWidth: 2.5
+          });
+        }
+
+        if (mainChart) {
+          mainChart.destroy();
+        }
+
+        mainChart = new Chart(ctx, {
+          type: state.chartType,
+          data: { labels, datasets },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            interaction: { mode: 'index', intersect: false },
+            animation: {
+              duration: 850,
+              easing: 'easeOutQuart'
+            },
+            plugins: {
+              legend: {
+                position: 'top',
+                align: 'end',
+                labels: {
+                  usePointStyle: true,
+                  boxWidth: 10,
+                  font: { family: 'Inter', size: 12, weight: '600' },
+                  color: '#334155'
+                }
+              },
+              tooltip: {
+                backgroundColor: '#0B1F3A',
+                titleFont: { family: 'Inter', size: 13, weight: '700' },
+                bodyFont: { family: 'Inter', size: 12 },
+                padding: 12,
+                cornerRadius: 10,
+                callbacks: {
+                  afterBody: function (tooltipItems) {
+                    const idx = tooltipItems[0].dataIndex;
+                    const item = items[idx];
+                    if (item && item.obsT1) {
+                      return `\nObs. T1: ${item.obsT1}`;
+                    }
+                    return '';
+                  }
+                }
+              }
+            },
+            scales: {
+              x: {
+                grid: { display: false },
+                ticks: {
+                  font: { family: 'Inter', size: 11, weight: '600' },
+                  color: '#475569'
+                }
+              },
+              y: {
+                beginAtZero: true,
+                suggestedMax: 50,
+                grid: { color: 'rgba(148, 163, 184, 0.2)' },
+                ticks: {
+                  font: { family: 'Inter', size: 11 },
+                  color: '#64748B'
+                }
+              }
+            }
+          }
+        });
+      }
+
+      function renderSaltoChart() {
+        const ctx = document.getElementById('saltoChart').getContext('2d');
+        const salto = TEST_DATA.find(d => d.id === 'salto');
+
+        const labels = [];
+        const data = [];
+        const bgColors = [];
+
+        if (state.viewMode === 'compare' || state.viewMode === 't1') {
+          labels.push('Tutoría 1');
+          data.push(salto.t1);
+          bgColors.push(COLORS.t1Fill);
+        }
+        if (state.viewMode === 'compare' || state.viewMode === 't5') {
+          labels.push('Tutoría 5');
+          data.push(salto.t5);
+          bgColors.push(COLORS.t5Fill);
+        }
+
+        if (saltoChart) {
+          saltoChart.destroy();
+        }
+
+        saltoChart = new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels,
+            datasets: [{
+              label: 'Salto (cm)',
+              data,
+              backgroundColor: bgColors,
+              borderRadius: 10,
+              maxBarThickness: 56
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            animation: { duration: 850, easing: 'easeOutQuart' },
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                backgroundColor: '#0B1F3A',
+                padding: 10,
+                cornerRadius: 10,
+                callbacks: {
+                  label: (c) => `${c.parsed.y} cm`
+                }
+              }
+            },
+            scales: {
+              x: {
+                grid: { display: false },
+                ticks: { font: { family: 'Inter', size: 12, weight: '600' }, color: '#334155' }
+              },
+              y: {
+                beginAtZero: true,
+                suggestedMax: 200,
+                grid: { color: 'rgba(148, 163, 184, 0.2)' },
+                ticks: {
+                  font: { family: 'Inter', size: 11 },
+                  color: '#64748B',
+                  callback: (v) => v + ' cm'
+                }
+              }
+            }
+          }
+        });
+      }
+
+      function renderRuffierChart() {
+        const ctx = document.getElementById('ruffierChart').getContext('2d');
+        const labels = ['Pulso 1 (Reposo)', 'Pulso 2 (Esfuerzo)', 'Pulso 3 (Recuperación)'];
+        const datasets = [];
+
+        if (state.viewMode === 'compare' || state.viewMode === 't1') {
+          datasets.push({
+            label: 'Tutoría 1 (Ruffier 0.80)',
+            data: [83, 105, 92],
+            borderColor: COLORS.t1Solid,
+            backgroundColor: COLORS.t1Area,
+            borderWidth: 2.8,
+            fill: true,
+            tension: 0.35,
+            pointRadius: 5,
+            pointHoverRadius: 7,
+            pointBackgroundColor: '#FFFFFF',
+            pointBorderColor: COLORS.t1Solid,
+            pointBorderWidth: 2.5
+          });
+        }
+
+        if (state.viewMode === 'compare' || state.viewMode === 't5') {
+          datasets.push({
+            label: 'Tutoría 5 (Ruffier 1.31)',
+            data: [83, 157, 91],
+            borderColor: COLORS.t5Solid,
+            backgroundColor: COLORS.t5Area,
+            borderWidth: 2.8,
+            fill: true,
+            tension: 0.35,
+            pointRadius: 5,
+            pointHoverRadius: 7,
+            pointBackgroundColor: '#FFFFFF',
+            pointBorderColor: COLORS.t5Solid,
+            pointBorderWidth: 2.5
+          });
+        }
+
+        if (ruffierChart) {
+          ruffierChart.destroy();
+        }
+
+        ruffierChart = new Chart(ctx, {
+          type: 'line',
+          data: { labels, datasets },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            interaction: { mode: 'index', intersect: false },
+            animation: { duration: 900, easing: 'easeOutQuart' },
+            plugins: {
+              legend: {
+                position: 'top',
+                align: 'start',
+                labels: {
+                  usePointStyle: true,
+                  boxWidth: 8,
+                  font: { family: 'Inter', size: 11, weight: '600' },
+                  color: '#334155'
+                }
+              },
+              tooltip: {
+                backgroundColor: '#0B1F3A',
+                padding: 10,
+                cornerRadius: 10,
+                callbacks: {
+                  label: (c) => `${c.dataset.label}: ${c.parsed.y} lpm`
+                }
+              }
+            },
+            scales: {
+              x: {
+                grid: { display: false },
+                ticks: { font: { family: 'Inter', size: 10, weight: '600' }, color: '#475569' }
+              },
+              y: {
+                min: 60,
+                max: 175,
+                grid: { color: 'rgba(148, 163, 184, 0.2)' },
+                ticks: {
+                  font: { family: 'Inter', size: 10 },
+                  color: '#64748B',
+                  callback: (v) => v + ' lpm'
+                }
+              }
+            }
+          }
+        });
+      }
+
+      function renderSpotlight() {
+        const item = TEST_DATA.find(d => d.id === state.selectedItemId) || TEST_DATA[0];
+        document.getElementById('spotCategory').textContent = item.categoryLabel;
+        document.getElementById('spotTitle').textContent = item.name;
+
+        const obsParts = [];
+        if (item.obsT1) obsParts.push(`Tutoría 1: ${item.obsT1}`);
+        if (item.obsT5) obsParts.push(`Tutoría 5: ${item.obsT5}`);
+        document.getElementById('spotObs').textContent = obsParts.length
+          ? `Observaciones registradas — ${obsParts.join(' · ')}.`
+          : `Unidad de medida: ${item.unit}. Sin observaciones especiales registradas en el Excel.`;
+
+        document.getElementById('spotT1').textContent = `${formatValue(item.t1, item.decimals)} ${item.unit === 'índice' ? '' : item.unit}`.trim();
+        document.getElementById('spotT5').textContent = `${formatValue(item.t5, item.decimals)} ${item.unit === 'índice' ? '' : item.unit}`.trim();
+        document.getElementById('spotDiff').textContent = computeDiffText(item);
+      }
+
+      function renderTable() {
+        const tbody = document.getElementById('dataTableBody');
+        const thT1 = document.getElementById('thT1');
+        const thT5 = document.getElementById('thT5');
+        const thDiff = document.getElementById('thDiff');
+
+        const showT1 = state.viewMode === 'compare' || state.viewMode === 't1';
+        const showT5 = state.viewMode === 'compare' || state.viewMode === 't5';
+        const showDiff = state.viewMode === 'compare';
+
+        thT1.style.display = showT1 ? '' : 'none';
+        thT5.style.display = showT5 ? '' : 'none';
+        thDiff.style.display = showDiff ? '' : 'none';
+
+        const filtered = TEST_DATA.filter(item => {
+          if (state.tableCategory !== 'all' && item.category !== state.tableCategory) return false;
+          if (state.tableStatus === 'improved' && item.trend !== 'improved') return false;
+          if (state.tableStatus === 'decreased' && item.trend !== 'decreased') return false;
+          if (state.tableStatus === 'obs' && !item.obsT1 && !item.obsT5) return false;
+          return true;
+        });
+
+        if (filtered.length === 0) {
+          tbody.innerHTML = `
+            <tr>
+              <td colspan="6" class="py-8 text-center text-slate-500 text-sm">
+                No hay pruebas que coincidan con el filtro seleccionado.
+              </td>
+            </tr>
+          `;
+          return;
+        }
+
+        tbody.innerHTML = filtered.map(item => {
+          const isSelected = item.id === state.selectedItemId;
+          const maxVal = Math.max(item.t1, item.t5, 1);
+          const pctT1 = Math.round((item.t1 / maxVal) * 100);
+          const pctT5 = Math.round((item.t5 / maxVal) * 100);
+
+          let badgeClass = 'bg-slate-100 text-slate-700';
+          if (item.trend === 'improved') badgeClass = 'bg-emerald-50 text-emerald-700';
+          else if (item.trend === 'decreased') badgeClass = 'bg-rose-50 text-rose-700';
+          else if (item.id === 'pulso2' || item.id === 'ruffier') badgeClass = 'bg-blue-50 text-blue-700';
+
+          const obsHtml = (item.obsT1 || item.obsT5)
+            ? `<div class="flex flex-wrap gap-1">
+                ${item.obsT1 ? `<span class="inline-flex px-2 py-0.5 rounded-md text-[11px] font-semibold ${item.obsT1.includes('ASMA') ? 'bg-amber-100 text-amber-800' : 'bg-slate-100 text-slate-600'}">T1: ${item.obsT1}</span>` : ''}
+                ${item.obsT5 ? `<span class="inline-flex px-2 py-0.5 rounded-md text-[11px] font-semibold bg-slate-100 text-slate-600">T5: ${item.obsT5}</span>` : ''}
+              </div>`
+            : `<span class="text-xs text-slate-400">—</span>`;
+
+          const progressHtml = `
+            <div class="space-y-1.5 min-w-[120px]">
+              ${showT1 ? `<div class="h-2 rounded-full bg-slate-100 overflow-hidden"><div class="progress-fill h-full rounded-full bg-[#1E40AF]" style="width:${pctT1}%"></div></div>` : ''}
+              ${showT5 ? `<div class="h-2 rounded-full bg-slate-100 overflow-hidden"><div class="progress-fill h-full rounded-full bg-[#0EA5E9]" style="width:${pctT5}%"></div></div>` : ''}
+            </div>
+          `;
+
+          return `
+            <tr data-item-id="${item.id}" class="table-row-interactive ${isSelected ? 'selected-row' : ''}">
+              <td class="py-3.5 px-3">
+                <div class="font-semibold text-slate-900">${item.name}</div>
+                <div class="text-[11px] text-slate-500">${item.categoryLabel}</div>
+              </td>
+              <td class="py-3.5 px-3 text-right font-bold text-[#1E40AF] tabular-nums" style="${showT1 ? '' : 'display:none'}">
+                ${formatValue(item.t1, item.decimals)}
+              </td>
+              <td class="py-3.5 px-3 text-right font-bold text-[#0EA5E9] tabular-nums" style="${showT5 ? '' : 'display:none'}">
+                ${formatValue(item.t5, item.decimals)}
+              </td>
+              <td class="py-3.5 px-3 text-center" style="${showDiff ? '' : 'display:none'}">
+                <span class="inline-flex px-2.5 py-1 rounded-full text-xs font-bold tabular-nums ${badgeClass}">
+                  ${computeDiffText(item)}
+                </span>
+              </td>
+              <td class="py-3.5 px-3 hidden sm:table-cell">${progressHtml}</td>
+              <td class="py-3.5 px-3">${obsHtml}</td>
+            </tr>
+          `;
+        }).join('');
+      }
+
+      // Evidence image loader (auto-tries ./evidencia1.webp and ./evidencia2.webp in root folder)
+      function loadEvidenceSlot(slotNumber, customSrc, customLabel) {
+        const cfg = EVIDENCE_FILES[slotNumber];
+        const img = document.getElementById(`evidenceImg${slotNumber}`);
+        const placeholder = document.getElementById(`evidencePlaceholder${slotNumber}`);
+        const frame = document.getElementById(`evidenceFrame${slotNumber}`);
+        const status = document.getElementById(`evidenceStatus${slotNumber}`);
+
+        const targetSrc = customSrc || `./${cfg.filename}`;
+
+        img.onload = () => {
+          img.classList.remove('hidden');
+          placeholder.classList.add('hidden');
+          frame.classList.add('has-image');
+          status.textContent = customLabel
+            ? `Cargada manualmente: ${customLabel}`
+            : ``;
+          status.className = 'text-xs text-emerald-700 font-semibold';
+        };
+
+        img.onerror = () => {
+          img.classList.add('hidden');
+          placeholder.classList.remove('hidden');
+          frame.classList.remove('has-image');
+          status.textContent = `Ruta esperada: ./${cfg.filename}`;
+          status.className = 'text-xs text-slate-500 font-medium';
+        };
+
+        img.src = targetSrc;
+      }
+
+      function initEvidenceSlots() {
+        loadEvidenceSlot(1);
+        loadEvidenceSlot(2);
+      }
+
+      function openLightbox(src, caption) {
+        const modal = document.getElementById('lightboxModal');
+        document.getElementById('lightboxImg').src = src;
+        document.getElementById('lightboxCaption').textContent = caption;
+        modal.classList.remove('hidden');
+      }
+
+      function closeLightbox() {
+        document.getElementById('lightboxModal').classList.add('hidden');
+      }
+
+      function renderAll() {
+        updateHeaderAndKpis();
+        if (state.activeView === 'resumen') {
+          renderMainChart();
+          renderSaltoChart();
+          renderRuffierChart();
+        }
+        renderSpotlight();
+        renderTable();
+      }
+
+      function bindEvents() {
+        // Header view tabs
+        document.querySelectorAll('[data-view-target]').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const target = btn.getAttribute('data-view-target');
+            switchView(target);
+          });
+        });
+
+        // View mode buttons (T1 vs T5 / Solo T1 / Solo T5)
+        document.querySelectorAll('[data-mode]').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const newMode = btn.getAttribute('data-mode');
+            if (newMode === state.viewMode) return;
+            state.viewMode = newMode;
+            document.querySelectorAll('[data-mode]').forEach(b => {
+              const active = b.getAttribute('data-mode') === newMode;
+              b.classList.toggle('active', active);
+              b.setAttribute('aria-selected', String(active));
+            });
+            renderAll();
+          });
+        });
+
+        // Chart type buttons
+        document.querySelectorAll('[data-chart-type]').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const type = btn.getAttribute('data-chart-type');
+            if (type === state.chartType) return;
+            state.chartType = type;
+            document.querySelectorAll('[data-chart-type]').forEach(b => {
+              b.classList.toggle('active', b.getAttribute('data-chart-type') === type);
+            });
+            renderMainChart();
+          });
+        });
+
+        // Chart category chips
+        document.querySelectorAll('[data-chart-cat]').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const cat = btn.getAttribute('data-chart-cat');
+            if (cat === state.chartCategory) return;
+            state.chartCategory = cat;
+            document.querySelectorAll('[data-chart-cat]').forEach(b => {
+              b.classList.toggle('active', b.getAttribute('data-chart-cat') === cat);
+            });
+            renderMainChart();
+          });
+        });
+
+        // Table filters
+        document.getElementById('tableCategorySelect').addEventListener('change', (e) => {
+          state.tableCategory = e.target.value;
+          renderTable();
+        });
+
+        document.getElementById('tableStatusSelect').addEventListener('change', (e) => {
+          state.tableStatus = e.target.value;
+          renderTable();
+        });
+
+        // Table row selection
+        document.getElementById('dataTableBody').addEventListener('click', (e) => {
+          const row = e.target.closest('tr[data-item-id]');
+          if (!row) return;
+          state.selectedItemId = row.getAttribute('data-item-id');
+          renderSpotlight();
+          renderTable();
+          const spot = document.getElementById('spotlightCard');
+          spot.classList.remove('replay-flash');
+          void spot.offsetWidth;
+          spot.classList.add('replay-flash');
+        });
+
+        // Replay animations button
+        document.getElementById('replayAnimBtn').addEventListener('click', () => {
+          document.querySelectorAll('.kpi-card').forEach(card => {
+            card.classList.remove('replay-flash');
+            void card.offsetWidth;
+            card.classList.add('replay-flash');
+          });
+          renderAll();
+        });
+
+        // Evidence file inputs & lightbox
+        [1, 2].forEach(slot => {
+          const input = document.getElementById(`evidenceInput${slot}`);
+          const img = document.getElementById(`evidenceImg${slot}`);
+
+          input.addEventListener('change', (e) => {
+            const file = e.target.files && e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (ev) => {
+              loadEvidenceSlot(slot, ev.target.result, file.name);
+            };
+            reader.readAsDataURL(file);
+          });
+
+          img.addEventListener('click', () => {
+            if (!img.classList.contains('hidden') && img.src) {
+              openLightbox(img.src, EVIDENCE_FILES[slot].title);
+            }
+          });
+        });
+
+        document.getElementById('reloadEvidenceBtn').addEventListener('click', () => {
+          initEvidenceSlots();
+        });
+
+        document.getElementById('closeLightboxBtn').addEventListener('click', closeLightbox);
+        document.getElementById('lightboxModal').addEventListener('click', (e) => {
+          if (e.target.id === 'lightboxModal') closeLightbox();
+        });
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        bindEvents();
+        renderAll();
+        initEvidenceSlots();
+      });
+    })();
+  </script>
+</body>
+</html>
