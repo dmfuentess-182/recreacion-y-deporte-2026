@@ -221,21 +221,21 @@
           </div>
         </div>
 
-        <nav aria-label="Vistas del dashboard" class="flex flex-wrap items-center gap-1.5 sm:gap-2 text-sm font-semibold">
-          <button type="button" data-view-target="resumen" class="nav-tab active px-3.5 py-1.5 rounded-xl border border-transparent text-blue-100 hover:text-white hover:bg-white/10 cursor-pointer flex items-center gap-1.5">
-            <svg class="w-4 h-4 text-sky-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+        <nav aria-label="Vistas del dashboard" class="flex items-center justify-between sm:justify-end w-full sm:w-auto gap-1 sm:gap-2 text-xs sm:text-sm font-semibold">
+          <button type="button" data-view-target="resumen" class="nav-tab active flex-1 sm:flex-none justify-center px-2.5 sm:px-3.5 py-1.5 rounded-xl border border-transparent text-blue-100 hover:text-white hover:bg-white/10 cursor-pointer flex items-center gap-1.5">
+            <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-sky-300 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
             </svg>
             Resumen
           </button>
-          <button type="button" data-view-target="datos" class="nav-tab px-3.5 py-1.5 rounded-xl border border-transparent text-blue-100 hover:text-white hover:bg-white/10 cursor-pointer flex items-center gap-1.5">
-            <svg class="w-4 h-4 text-sky-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+          <button type="button" data-view-target="datos" class="nav-tab flex-1 sm:flex-none justify-center px-2.5 sm:px-3.5 py-1.5 rounded-xl border border-transparent text-blue-100 hover:text-white hover:bg-white/10 cursor-pointer flex items-center gap-1.5">
+            <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-sky-300 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M3 14h18m-9-4v8m-7 0h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
             </svg>
             Datos
           </button>
-          <button type="button" data-view-target="evidencia" class="nav-tab px-3.5 py-1.5 rounded-xl border border-transparent text-blue-100 hover:text-white hover:bg-white/10 cursor-pointer flex items-center gap-1.5">
-            <svg class="w-4 h-4 text-sky-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+          <button type="button" data-view-target="evidencia" class="nav-tab flex-1 sm:flex-none justify-center px-2.5 sm:px-3.5 py-1.5 rounded-xl border border-transparent text-blue-100 hover:text-white hover:bg-white/10 cursor-pointer flex items-center gap-1.5">
+            <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-sky-300 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
             </svg>
             Evidencia
@@ -256,24 +256,24 @@
   </header>
 
   <!-- STICKY MODE SELECTOR BAR (shown on Vista 1 & Vista 2) -->
-  <div id="modeSelectorBar" class="sticky top-0 z-30 bg-white/90 backdrop-blur-md border-b border-slate-200/80 shadow-sm">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-1.5 flex flex-col sm:flex-row items-center justify-between gap-2">
-      <div class="flex items-center gap-2 text-xs sm:text-sm font-semibold text-slate-600">
+  <div id="modeSelectorBar" class="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-sm">
+    <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-1.5 flex items-center justify-between gap-2">
+      <div class="hidden md:flex items-center gap-2 text-xs sm:text-sm font-semibold text-slate-600 shrink-0">
         <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true">
           <path stroke-linecap="round" stroke-linejoin="round" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
         </svg>
         <span>Modo de visualización:</span>
       </div>
 
-      <div role="tablist" aria-label="Selector de tutoría" class="inline-flex p-1 rounded-xl bg-slate-100 border border-slate-200 w-full sm:w-auto justify-center">
-        <button type="button" role="tab" data-mode="compare" aria-selected="true" class="seg-btn active flex-1 sm:flex-none px-3.5 sm:px-5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold text-slate-700 cursor-pointer">
-          Comparar T1 vs T5
+      <div role="tablist" aria-label="Selector de tutoría" class="inline-flex p-1 rounded-xl bg-slate-100 border border-slate-200 flex-1 sm:flex-none justify-center">
+        <button type="button" role="tab" data-mode="compare" aria-selected="true" class="seg-btn active flex-1 sm:flex-none px-2 sm:px-4 py-1.5 rounded-lg text-[11px] sm:text-sm font-semibold text-slate-700 whitespace-nowrap cursor-pointer">
+          T1 vs T5
         </button>
-        <button type="button" role="tab" data-mode="t1" aria-selected="false" class="seg-btn flex-1 sm:flex-none px-3.5 sm:px-5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold text-slate-700 hover:text-blue-700 cursor-pointer">
-          Solo Tutoría 1
+        <button type="button" role="tab" data-mode="t1" aria-selected="false" class="seg-btn flex-1 sm:flex-none px-2 sm:px-4 py-1.5 rounded-lg text-[11px] sm:text-sm font-semibold text-slate-700 hover:text-blue-700 whitespace-nowrap cursor-pointer">
+          Tutoría 1
         </button>
-        <button type="button" role="tab" data-mode="t5" aria-selected="false" class="seg-btn flex-1 sm:flex-none px-3.5 sm:px-5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold text-slate-700 hover:text-sky-600 cursor-pointer">
-          Solo Tutoría 5
+        <button type="button" role="tab" data-mode="t5" aria-selected="false" class="seg-btn flex-1 sm:flex-none px-2 sm:px-4 py-1.5 rounded-lg text-[11px] sm:text-sm font-semibold text-slate-700 hover:text-sky-600 whitespace-nowrap cursor-pointer">
+          Tutoría 5
         </button>
       </div>
 
@@ -423,7 +423,7 @@
             <!-- Formula pill -->
             <div class="flex justify-end">
               <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-blue-50 text-blue-700 border border-blue-100">
-                Fórmula Excel: ((P1 + P2 + P3) − 200) / 100
+                Fórmula: ((P1 + P2 + P3) − 200) / 10
               </span>
             </div>
 
@@ -450,12 +450,19 @@
             </div>
 
             <!-- Ruffier Insight Box -->
-            <div class="p-2.5 rounded-xl bg-blue-50/80 border border-blue-200/70">
+            <div class="p-2.5 rounded-xl bg-blue-50/80 border border-blue-200/70 space-y-1.5">
               <div class="flex flex-wrap items-center justify-between gap-1.5">
                 <span class="text-[10px] font-bold uppercase tracking-wider text-blue-900">Resultado Índice de Ruffier</span>
-                <span id="ruffierComparePill" class="text-[10px] font-bold text-blue-700 bg-white px-2 py-0.5 rounded-full border border-blue-200">T1: 0.80 · T5: 1.31</span>
+                <span id="ruffierComparePill" class="text-[10px] font-bold text-blue-700 bg-white px-2 py-0.5 rounded-full border border-blue-200">T1: 8.0 (Buena) · T5: 13.1 (Baja)</span>
               </div>
-              <p class="mt-1 text-[11px] text-slate-700 leading-snug">
+              <div class="flex flex-wrap items-center gap-1 text-[9.5px] font-semibold text-slate-600">
+                <span class="px-1.5 py-0.5 rounded bg-white/80 border border-slate-200">0: Óptima</span>
+                <span class="px-1.5 py-0.5 rounded bg-white/80 border border-slate-200">1–5: Muy buena</span>
+                <span class="px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 border border-emerald-200">6–10: Buena (T1)</span>
+                <span class="px-1.5 py-0.5 rounded bg-amber-100 text-amber-800 border border-amber-200">11–15: Baja (T5)</span>
+                <span class="px-1.5 py-0.5 rounded bg-white/80 border border-slate-200">&gt;15: Insuficiente</span>
+              </div>
+              <p class="text-[11px] text-slate-700 leading-snug">
                 En la Tutoría 5, el <strong>Pulso 2</strong> subió a <strong>157 lpm</strong> al completar las 22 vueltas del test de cooper aplicado en 12 minutos (que en T1 no se completaron por asma), pero la recuperación al minuto (<strong>Pulso 3 = 91 lpm</strong>) fue incluso 1 lpm más baja que en Tutoría 1 (92 lpm), evidenciando buena capacidad de recuperación cardíaca.
               </p>
             </div>
@@ -537,7 +544,7 @@
           <div class="flex items-center justify-between gap-2">
             <div>
               <p class="text-[10px] font-bold uppercase tracking-wider text-slate-500">Índice de Ruffier</p>
-              <h2 class="text-[10px] text-slate-400">((P1+P2+P3) − 200) / 100</h2>
+              <h2 class="text-[10px] text-slate-400">((P1+P2+P3) − 200) / 10</h2>
             </div>
             <div class="w-7 h-7 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
               <svg class="w-3.5 h-3.5 pulse-heart text-blue-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
@@ -546,11 +553,11 @@
             </div>
           </div>
           <div class="mt-1 flex items-baseline gap-1.5">
-            <span id="kpiRuffierValue" class="text-xl font-extrabold text-slate-900 tabular-nums">1.31</span>
-            <span class="text-[11px] font-medium text-slate-500">índice</span>
+            <span id="kpiRuffierValue" class="text-xl font-extrabold text-slate-900 tabular-nums">13.1</span>
+            <span id="kpiRuffierLevel" class="text-[11px] font-bold text-amber-700">· Baja</span>
           </div>
           <div id="kpiRuffierSub" class="mt-1 text-[10px] font-semibold text-blue-700 bg-blue-50 inline-flex items-center gap-1 px-2 py-0.5 rounded-full">
-            T1: 0.80 → T5: 1.31 (+0.51)
+            T1: 8.0 (Buena) → T5: 13.1 (Baja)
           </div>
         </article>
       </section>
@@ -597,19 +604,19 @@
             <p id="spotObs" class="mt-1 text-xs sm:text-sm text-slate-600">Observación T1: No completado por ASMA · T5: Completado sin novedades.</p>
           </div>
 
-          <div class="flex items-center gap-3 sm:gap-5 shrink-0">
-            <div class="text-center px-3.5 py-2 rounded-xl bg-white border border-slate-200 shadow-sm min-w-[84px]">
-              <span class="block text-[11px] font-semibold text-slate-400">Tutoría 1</span>
-              <span id="spotT1" class="text-lg font-extrabold text-[#1E40AF] tabular-nums">13</span>
+          <div class="grid grid-cols-3 sm:flex items-center gap-2 sm:gap-4 w-full md:w-auto shrink-0">
+            <div class="text-center px-2 sm:px-3.5 py-2 rounded-xl bg-white border border-slate-200 shadow-sm sm:min-w-[84px]">
+              <span class="block text-[10px] sm:text-[11px] font-semibold text-slate-400">Tutoría 1</span>
+              <span id="spotT1" class="text-sm sm:text-lg font-extrabold text-[#1E40AF] tabular-nums">13</span>
             </div>
-            <div class="text-slate-400 font-bold">→</div>
-            <div class="text-center px-3.5 py-2 rounded-xl bg-white border border-slate-200 shadow-sm min-w-[84px]">
-              <span class="block text-[11px] font-semibold text-slate-400">Tutoría 5</span>
-              <span id="spotT5" class="text-lg font-extrabold text-[#0EA5E9] tabular-nums">22</span>
+            <div class="hidden sm:block text-slate-400 font-bold">→</div>
+            <div class="text-center px-2 sm:px-3.5 py-2 rounded-xl bg-white border border-slate-200 shadow-sm sm:min-w-[84px]">
+              <span class="block text-[10px] sm:text-[11px] font-semibold text-slate-400">Tutoría 5</span>
+              <span id="spotT5" class="text-sm sm:text-lg font-extrabold text-[#0EA5E9] tabular-nums">22</span>
             </div>
-            <div class="text-center px-3.5 py-2 rounded-xl bg-blue-600 text-white shadow-sm min-w-[92px]">
-              <span class="block text-[11px] font-medium text-blue-100">Variación</span>
-              <span id="spotDiff" class="text-sm sm:text-base font-extrabold tabular-nums">+9 (+69.2%)</span>
+            <div class="text-center px-2 sm:px-3.5 py-2 rounded-xl bg-blue-600 text-white shadow-sm sm:min-w-[92px]">
+              <span class="block text-[10px] sm:text-[11px] font-medium text-blue-100">Variación</span>
+              <span id="spotDiff" class="text-xs sm:text-base font-extrabold tabular-nums">+9 (+69.2%)</span>
             </div>
           </div>
         </div>
@@ -645,7 +652,7 @@
             </div>
             <h2 class="text-xl font-bold text-slate-900">Evidencia Fotográfica</h2>
             <p class="text-xs sm:text-sm text-slate-500 mt-0.5">
-              En este espacio se encuentran las evidencias cargadas de las respectivas<code class="px-1.5 py-0.5 rounded bg-blue-50 text-blue-700 font-semibold">evidencias</code> firmadas por la docente.
+              En este espacio se encuentran las evidencias cargadas de las respectivas <code class="px-1.5 py-0.5 rounded bg-blue-50 text-blue-700 font-semibold">evidencias</code> firmadas por la docente.
             </p>
           </div>
           <button id="reloadEvidenceBtn" type="button" style="display: none;" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-blue-50 hover:bg-blue-100 text-blue-700 text-xs font-semibold border border-blue-200 transition cursor-pointer self-start md:self-auto">
@@ -760,7 +767,7 @@
           <span>Dashboard de Evaluación Física · Recreación y Deporte</span>
         </div>
         <p class="mt-1 text-xs text-slate-400">
-          Datos procesados de <span class="text-sky-300 font-medium">Test Diego.xlsx</span> (Tutoría 1 y Tutoría 5) · Fórmula Ruffier: ((P1+P2+P3) − 200) / 100
+          Datos procesados de <span class="text-sky-300 font-medium">Test Diego.xlsx</span> (Tutoría 1 y Tutoría 5) · Fórmula Ruffier: ((P1+P2+P3) − 200) / 10
         </p>
       </div>
 
@@ -937,17 +944,17 @@
         },
         {
           id: 'ruffier',
-          name: 'Índice de Ruffier ((P1+P2+P3)-200)/100',
+          name: 'Índice de Ruffier ((P1+P2+P3)-200)/10',
           shortName: 'Ruffier',
           category: 'cardio',
           categoryLabel: 'Cardiovascular',
           unit: 'índice',
-          t1: 0.8,
-          obsT1: '',
-          t5: 1.31,
-          obsT5: '',
+          t1: 8.0,
+          obsT1: 'Nivel: Buena (6–10)',
+          t5: 13.1,
+          obsT5: 'Nivel: Baja (11–15)',
           trend: 'neutral',
-          decimals: 2
+          decimals: 1
         }
       ];
 
@@ -1079,6 +1086,7 @@
         const kpiSaltoVal = document.getElementById('kpiSaltoValue');
         const kpiSaltoSub = document.getElementById('kpiSaltoSub');
         const kpiRuffierVal = document.getElementById('kpiRuffierValue');
+        const kpiRuffierLvl = document.getElementById('kpiRuffierLevel');
         const kpiRuffierSub = document.getElementById('kpiRuffierSub');
 
         if (state.viewMode === 't1') {
@@ -1094,9 +1102,11 @@
           kpiSaltoSub.className = 'mt-1 text-[10px] font-semibold text-indigo-700 bg-indigo-50 inline-flex items-center gap-1 px-2 py-0.5 rounded-full';
           kpiSaltoSub.textContent = 'Tutoría 1 · Registro inicial (Cms)';
 
-          animateCounter(kpiRuffierVal, ruffier.t1, 2);
-          kpiRuffierSub.className = 'mt-1 text-[10px] font-semibold text-blue-700 bg-blue-50 inline-flex items-center gap-1 px-2 py-0.5 rounded-full';
-          kpiRuffierSub.textContent = 'Tutoría 1 · P1:83 · P2:105 · P3:92';
+          animateCounter(kpiRuffierVal, ruffier.t1, 1);
+          kpiRuffierLvl.className = 'text-[11px] font-bold text-emerald-700';
+          kpiRuffierLvl.textContent = '· Buena';
+          kpiRuffierSub.className = 'mt-1 text-[10px] font-semibold text-emerald-700 bg-emerald-50 inline-flex items-center gap-1 px-2 py-0.5 rounded-full';
+          kpiRuffierSub.textContent = 'T1 · Nivel Buena (P1:83 · P2:105 · P3:92)';
         } else if (state.viewMode === 't5') {
           animateCounter(kpiCooperVal, cooper.t5, 0);
           kpiCooperSub.className = 'mt-1 text-[10px] font-semibold text-emerald-700 bg-emerald-50 inline-flex items-center gap-1 px-2 py-0.5 rounded-full';
@@ -1110,9 +1120,11 @@
           kpiSaltoSub.className = 'mt-1 text-[10px] font-semibold text-sky-700 bg-sky-50 inline-flex items-center gap-1 px-2 py-0.5 rounded-full';
           kpiSaltoSub.textContent = 'Tutoría 5 · Registro final (Cms)';
 
-          animateCounter(kpiRuffierVal, ruffier.t5, 2);
-          kpiRuffierSub.className = 'mt-1 text-[10px] font-semibold text-sky-700 bg-sky-50 inline-flex items-center gap-1 px-2 py-0.5 rounded-full';
-          kpiRuffierSub.textContent = 'Tutoría 5 · P1:83 · P2:157 · P3:91';
+          animateCounter(kpiRuffierVal, ruffier.t5, 1);
+          kpiRuffierLvl.className = 'text-[11px] font-bold text-amber-700';
+          kpiRuffierLvl.textContent = '· Baja';
+          kpiRuffierSub.className = 'mt-1 text-[10px] font-semibold text-amber-800 bg-amber-50 inline-flex items-center gap-1 px-2 py-0.5 rounded-full';
+          kpiRuffierSub.textContent = 'T5 · Nivel Baja (P1:83 · P2:157 · P3:91)';
         } else {
           animateCounter(kpiCooperVal, cooper.t5, 0);
           kpiCooperSub.className = 'mt-1 text-[10px] font-semibold text-emerald-700 bg-emerald-50 inline-flex items-center gap-1 px-2 py-0.5 rounded-full';
@@ -1126,9 +1138,11 @@
           kpiSaltoSub.className = 'mt-1 text-[10px] font-semibold text-rose-700 bg-rose-50 inline-flex items-center gap-1 px-2 py-0.5 rounded-full';
           kpiSaltoSub.textContent = '-47 cm (-26.7%) vs T1 (176 cm)';
 
-          animateCounter(kpiRuffierVal, ruffier.t5, 2);
+          animateCounter(kpiRuffierVal, ruffier.t5, 1);
+          kpiRuffierLvl.className = 'text-[11px] font-bold text-amber-700';
+          kpiRuffierLvl.textContent = '· Baja';
           kpiRuffierSub.className = 'mt-1 text-[10px] font-semibold text-blue-700 bg-blue-50 inline-flex items-center gap-1 px-2 py-0.5 rounded-full';
-          kpiRuffierSub.textContent = 'T1: 0.80 → T5: 1.31 (+0.51)';
+          kpiRuffierSub.textContent = 'T1: 8.0 (Buena) → T5: 13.1 (Baja)';
         }
 
         // Salto badge
@@ -1153,17 +1167,17 @@
           p1El.textContent = '83';
           p2El.textContent = '105';
           p3El.textContent = '92';
-          rPill.textContent = 'Solo T1: 0.80';
+          rPill.textContent = 'T1: 8.0 (Nivel: Buena)';
         } else if (state.viewMode === 't5') {
           p1El.textContent = '83';
           p2El.textContent = '157';
           p3El.textContent = '91';
-          rPill.textContent = 'Solo T5: 1.31';
+          rPill.textContent = 'T5: 13.1 (Nivel: Baja)';
         } else {
           p1El.textContent = '83 / 83';
           p2El.textContent = '105 / 157';
           p3El.textContent = '92 / 91';
-          rPill.textContent = 'T1: 0.80 · T5: 1.31';
+          rPill.textContent = 'T1: 8.0 (Buena) · T5: 13.1 (Baja)';
         }
       }
 
@@ -1370,7 +1384,7 @@
 
         if (state.viewMode === 'compare' || state.viewMode === 't1') {
           datasets.push({
-            label: 'Tutoría 1 (Ruffier 0.80)',
+            label: 'Tutoría 1 (Ruffier 8.0 · Buena)',
             data: [83, 105, 92],
             borderColor: COLORS.t1Solid,
             backgroundColor: COLORS.t1Area,
@@ -1387,7 +1401,7 @@
 
         if (state.viewMode === 'compare' || state.viewMode === 't5') {
           datasets.push({
-            label: 'Tutoría 5 (Ruffier 1.31)',
+            label: 'Tutoría 5 (Ruffier 13.1 · Baja)',
             data: [83, 157, 91],
             borderColor: COLORS.t5Solid,
             backgroundColor: COLORS.t5Area,
